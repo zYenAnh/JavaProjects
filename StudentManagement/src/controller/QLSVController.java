@@ -100,8 +100,6 @@ public class QLSVController implements ActionListener{
 							st.getDiemLy() +""
 			});	
 		} else {
-			// Testtttttttttt
-			// Tesst22222222
 			this.view.sinhVienTable.clearSelection();
 		}
 	}
