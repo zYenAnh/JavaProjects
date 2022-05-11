@@ -101,6 +101,7 @@ public class QLSVController implements ActionListener{
 			});	
 		} else {
 			// Testtttttttttt
+			// Tesst22222222
 			this.view.sinhVienTable.clearSelection();
 		}
 	}
