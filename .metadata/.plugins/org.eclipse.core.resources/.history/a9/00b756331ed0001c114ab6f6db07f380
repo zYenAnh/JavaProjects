@@ -1,0 +1,21 @@
+package controller;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import view.QLSVView;
+
+public class TableController implements ListSelectionListener{
+
+	private QLSVView view;
+	
+	public TableController(QLSVView view) {
+		this.view = view;
+	}
+	
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		this.view.loadDataTableToInput();
+	}
+
+}

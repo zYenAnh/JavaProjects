@@ -1,0 +1,37 @@
+package controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import view.QLSVView;
+
+public class QLSVController implements ActionListener{
+
+	private QLSVView view;
+	
+	public QLSVController(QLSVView view) {
+		this.view = view;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String srcString = e.getActionCommand();
+		if(srcString.equals("Thêm")) {
+			try {
+				this.view.themSinhVien(this.view.getDataInputBox());
+				this.view.clearFormInput();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		} else if(srcString.equals("Xoá")) {
+			try {
+				this.view.remove();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+	}
+	
+	
+	
+}

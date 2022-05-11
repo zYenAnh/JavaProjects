@@ -1,0 +1,52 @@
+package model;
+
+import java.util.Objects;
+
+public class Province {
+	private int maTinhInt;
+	private String tenTinhString;
+	
+	public Province(int maTinhInt, String tenTinhString) {
+		super();
+		this.maTinhInt = maTinhInt;
+		this.tenTinhString = tenTinhString;
+	}
+
+	public int getMaTinhInt() {
+		return maTinhInt;
+	}
+
+	public void setMaTinhInt(int maTinhInt) {
+		this.maTinhInt = maTinhInt;
+	}
+
+	public String getTenTinhString() {
+		return tenTinhString;
+	}
+
+	public void setTenTinhString(String tenTinhString) {
+		this.tenTinhString = tenTinhString;
+	}
+
+	@Override
+	public String toString() {
+		return "Province [maTinhInt=" + maTinhInt + ", tenTinhString=" + tenTinhString + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(maTinhInt, tenTinhString);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Province other = (Province) obj;
+		return maTinhInt == other.maTinhInt && Objects.equals(tenTinhString, other.tenTinhString);
+	}
+}

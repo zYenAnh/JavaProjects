@@ -1,0 +1,37 @@
+package model;
+
+import java.util.ArrayList;
+
+public class QLSVModel {
+	private ArrayList<Student> dsSinhVien;
+	
+	public QLSVModel() {
+		dsSinhVien = new ArrayList<Student>();
+	}
+	
+	public QLSVModel(ArrayList<Student> dsSinhVien) {
+		super();
+		this.dsSinhVien = dsSinhVien;
+	}
+
+	public ArrayList<Student> getDsSinhVien() {
+		return dsSinhVien;
+	}
+
+	public void setDsSinhVien(ArrayList<Student> dsSinhVien) {
+		this.dsSinhVien = dsSinhVien;
+	}
+	
+	public void insert(Student student) {
+		this.dsSinhVien.add(student);
+	}
+	
+	public void remove(Student student) {
+		this.dsSinhVien.remove(student);
+	}
+	
+	public void update(Student student) {
+		this.dsSinhVien.remove(student);
+		this.dsSinhVien.add(student);
+	}
+}

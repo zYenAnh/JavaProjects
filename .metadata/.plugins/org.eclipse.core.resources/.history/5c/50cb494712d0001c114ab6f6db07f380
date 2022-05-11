@@ -1,0 +1,51 @@
+package model;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class QLSVModel {
+	private ArrayList<Student> dsSinhVien;
+	
+	(int maSinhVienInt, String tenSinhVienString, Province queQuanProvince, Date ngaySinhDate,
+			boolean gioiTinh, float diemToan, float diemLy, float diemHoa)
+	
+	public QLSVModel() {
+		dsSinhVien = new ArrayList<Student>();
+		dsSinhVien.add(new Student(2020772,"Bùi Thiện"
+				,Province.getTinhByName("Nghệ An"),new Date("17/06/2001"),true,10,10,10));
+		dsSinhVien.add(new Student(2020773,"Yến Anh"
+				,Province.getTinhByName("Đắk Lắk"),new Date("23/04/2003"),true,8,10,9));
+		dsSinhVien.add(new Student(2020774,"Vân Chi"
+				,Province.getTinhByName("Đắk Lắk"),new Date("11/06/2003"),true,10,10,9));
+		dsSinhVien.add(new Student(2020775,"Tiểu Trang"
+				,Province.getTinhByName("Đắk Lắk"),new Date("16/07/2002"),true,10,9,9));
+		dsSinhVien.add(new Student(2020776,"Quế Anh"
+				,Province.getTinhByName("Đắk Lắk"),new Date("19/06/2002"),true,8,9,10));
+	}
+	
+	public QLSVModel(ArrayList<Student> dsSinhVien) {
+		super();
+		this.dsSinhVien = dsSinhVien;
+	}
+
+	public ArrayList<Student> getDsSinhVien() {
+		return dsSinhVien;
+	}
+
+	public void setDsSinhVien(ArrayList<Student> dsSinhVien) {
+		this.dsSinhVien = dsSinhVien;
+	}
+	
+	public void insert(Student student) {
+		this.dsSinhVien.add(student);
+	}
+	
+	public void remove(Student student) {
+		this.dsSinhVien.remove(student);
+	}
+	
+	public void update(Student student) {
+		this.dsSinhVien.remove(student);
+		this.dsSinhVien.add(student);
+	}
+}

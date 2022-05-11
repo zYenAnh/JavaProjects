@@ -1,0 +1,24 @@
+package Controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import View.MyColorView;
+
+public class MyColorController implements ActionListener{
+
+	private MyColorView view;
+	
+	public MyColorController(MyColorView view) {
+		// TODO Auto-generated constructor stub
+		this.view = view;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		String srcString = e.getActionCommand();
+		if(srcString.equals())
+		
+	}
+
+}

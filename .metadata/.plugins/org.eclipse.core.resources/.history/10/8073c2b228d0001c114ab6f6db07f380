@@ -1,0 +1,110 @@
+package controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+
+import javax.swing.table.DefaultTableModel;
+
+import model.Province;
+import model.Student;
+import view.QLSVView;
+
+public class QLSVController implements ActionListener{
+
+	private QLSVView view;
+	
+	public QLSVController(QLSVView view) {
+		this.view = view;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String srcString = e.getActionCommand();
+		if(srcString.equals("Thêm")) {
+			try {
+				this.themSinhVien(this.getDataInputBox());
+				this.clearFormInput();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		} else if(srcString.equals("Xoá")) {
+			try {
+				this.remove();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		} else if(srcString.equals("Sửa")) {
+			this.edit();
+		}
+	}
+	
+	public void clearFormInput() {
+		this.view.idTextField.setText("");
+		this.view.nameTextFeild.setText("");
+		this.view.diemToanTextFeild.setText("");
+		this.view.diemLyTextFeild.setText("");
+		this.view.diemHoaTextFeild.setText("");
+		this.view.dateOfBirthTextField.setText("");
+		this.view.gioiTinh.clearSelection();
+		this.view.totalTextField.setText("");
+		this.view.queQuanOfInfoComboBox.setSelectedIndex(-1);
+	}
+	
+	public Student getDataInputBox() {
+		int id = Integer.valueOf(this.view.idTextField.getText());
+		String tenSV = this.view.nameTextFeild.getText();
+		int idQueQuanSelected = this.view.queQuanOfInfoComboBox.getSelectedIndex();
+		Province queQuan = Province.getTinhById(idQueQuanSelected);
+		Date ngaySinh = new Date(this.view.dateOfBirthTextField.getText());
+		boolean gioiTinh = this.view.namRadioBtn.isSelected();
+		float diemToan = Float.valueOf(this.view.diemToanTextFeild.getText());
+		float diemHoa = Float.valueOf(this.view.diemHoaTextFeild.getText());
+		float diemLy = Float.valueOf(this.view.diemLyTextFeild.getText());
+		
+		return new Student(id,tenSV,queQuan,ngaySinh,gioiTinh,diemToan,diemLy,diemHoa);
+	}
+	
+	public void themSinhVien(Student st) {
+		this.view.model.insert(st);
+		DefaultTableModel modelTable = (DefaultTableModel) this.view.sinhVienTable.getModel();
+		modelTable.addRow(new Object[] {
+				modelTable.getRowCount()+1,
+				st.getMaSinhVienInt() + "",
+				st.getTenSinhVienString(),
+				st.getQueQuanProvince().getTenTinhString(),
+				st.getNgaySinhDate().getDay()+"/"+st.getNgaySinhDate().getMonth()+"/"+ st.getNgaySinhDate().getYear() ,
+				(st.isGioiTinh())?"Nam":"Nữ",
+				st.getDiemToan()+"",
+				st.getDiemHoa() + "",
+				st.getDiemLy() +""
+		});
+	}
+	
+	public void remove() {
+		DefaultTableModel modelTable = (DefaultTableModel) this.view.sinhVienTable.getModel();
+		int row_index = this.view.sinhVienTable.getSelectedRow();
+		modelTable.removeRow(row_index);
+		this.view.model.getDsSinhVien().remove(row_index);
+	}
+	
+	public void edit() {
+		DefaultTableModel tableModel = (DefaultTableModel) this.view.sinhVienTable.getModel();
+		int row_index = this.view.sinhVienTable.getSelectedRow();
+		int maSo = Integer.valueOf(tableModel.getValueAt(row_index, 1)+"");
+		for(Student st: this.view.model.getDsSinhVien()) {
+			
+		}
+		
+		Student t = getDataInputBox();
+		tableModel.setValueAt(t.getTenSinhVienString(), row_index, 2);
+		tableModel.setValueAt(t.getQueQuanProvince().getTenTinhString(), row_index, 3);
+		tableModel.setValueAt(t.getNgaySinhDate().getDay()+"/"+t.getNgaySinhDate().getMonth()+"/"+ t.getNgaySinhDate().getYear(), row_index, 4);
+		tableModel.setValueAt(t.isGioiTinh()?"Nam":"Nữ", row_index, 5);
+		tableModel.setValueAt(t.getDiemToan(), row_index, 6);
+		tableModel.setValueAt(t.getDiemHoa(), row_index, 7);
+		tableModel.setValueAt(t.getDiemLy(), row_index, 8);
+		
+	}
+	
+}

@@ -1,0 +1,126 @@
+package model;
+
+import java.util.Date;
+import java.util.Objects;
+
+public class Student {
+	private int maSinhVienInt;
+	private String tenSinhVienString;
+	private Province queQuanProvince;
+	private Date ngaySinhDate;
+	private boolean gioiTinh;
+	private float diemMon_1,diemMon_2,diemMon_3;
+	
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Student(int maSinhVienInt, String tenSinhVienString, Province queQuanProvince, Date ngaySinhDate,
+			boolean gioiTinh, float diemMon_1, float diemMon_2, float diemMon_3) {
+		super();
+		this.maSinhVienInt = maSinhVienInt;
+		this.tenSinhVienString = tenSinhVienString;
+		this.queQuanProvince = queQuanProvince;
+		this.ngaySinhDate = ngaySinhDate;
+		this.gioiTinh = gioiTinh;
+		this.diemMon_1 = diemMon_1;
+		this.diemMon_2 = diemMon_2;
+		this.diemMon_3 = diemMon_3;
+	}
+
+	public int getMaHocSinhInt() {
+		return maSinhVienInt;
+	}
+
+	public void setMaHocSinhInt(int maHocSinhInt) {
+		this.maSinhVienInt = maHocSinhInt;
+	}
+
+	public String getTenHocSinhString() {
+		return tenSinhVienString;
+	}
+
+	public void setTenHocSinhString(String tenHocSinhString) {
+		this.tenSinhVienString = tenHocSinhString;
+	}
+
+	public Province getQueQuanProvince() {
+		return queQuanProvince;
+	}
+
+	public void setQueQuanProvince(Province queQuanProvince) {
+		this.queQuanProvince = queQuanProvince;
+	}
+
+	public Date getNgaySinhDate() {
+		return ngaySinhDate;
+	}
+
+	public void setNgaySinhDate(Date ngaySinhDate) {
+		this.ngaySinhDate = ngaySinhDate;
+	}
+
+	public boolean isGioiTinh() {
+		return gioiTinh;
+	}
+
+	public void setGioiTinh(boolean gioiTinh) {
+		this.gioiTinh = gioiTinh;
+	}
+
+	public float getDiemMon_1() {
+		return diemMon_1;
+	}
+
+	public void setDiemMon_1(float diemMon_1) {
+		this.diemMon_1 = diemMon_1;
+	}
+
+	public float getDiemMon_2() {
+		return diemMon_2;
+	}
+
+	public void setDiemMon_2(float diemMon_2) {
+		this.diemMon_2 = diemMon_2;
+	}
+
+	public float getDiemMon_3() {
+		return diemMon_3;
+	}
+
+	public void setDiemMon_3(float diemMon_3) {
+		this.diemMon_3 = diemMon_3;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [maHocSinhInt=" + maSinhVienInt + ", tenHocSinhString=" + tenSinhVienString + ", queQuanProvince="
+				+ queQuanProvince + ", ngaySinhDate=" + ngaySinhDate + ", gioiTinh=" + gioiTinh + ", diemMon_1="
+				+ diemMon_1 + ", diemMon_2=" + diemMon_2 + ", diemMon_3=" + diemMon_3 + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(diemMon_1, diemMon_2, diemMon_3, gioiTinh, maSinhVienInt, ngaySinhDate, queQuanProvince,
+				tenSinhVienString);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		return Float.floatToIntBits(diemMon_1) == Float.floatToIntBits(other.diemMon_1)
+				&& Float.floatToIntBits(diemMon_2) == Float.floatToIntBits(other.diemMon_2)
+				&& Float.floatToIntBits(diemMon_3) == Float.floatToIntBits(other.diemMon_3)
+				&& gioiTinh == other.gioiTinh && maSinhVienInt == other.maSinhVienInt
+				&& Objects.equals(ngaySinhDate, other.ngaySinhDate)
+				&& Objects.equals(queQuanProvince, other.queQuanProvince)
+				&& Objects.equals(tenSinhVienString, other.tenSinhVienString);
+	}
+	
+}

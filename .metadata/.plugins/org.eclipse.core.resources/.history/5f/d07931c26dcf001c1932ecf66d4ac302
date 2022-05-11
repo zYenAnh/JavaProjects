@@ -1,0 +1,83 @@
+package View;
+
+import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import Model.CalculateModel;
+
+public class CalculateView extends JFrame{
+	private CalculateModel calculateModel;
+	
+	public CalculateView() {
+		// TODO Auto-generated constructor stub
+		this.calculateModel = new CalculateModel();
+		this.init();
+	}
+	
+	public void init() {
+		this.setTitle("Calculate");
+		this.setSize(400,400);
+		this.setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Font font = new Font("Arial",Font.BOLD,20);
+		
+		JLabel value_1Jlable = new JLabel("Value 1");
+		value_1Jlable.setFont(font);
+		JLabel value_2Jlable = new JLabel("Value 2");
+		value_2Jlable.setFont(font);
+		JLabel resultJLabel = new JLabel("Resuld");
+		resultJLabel.setFont(font);
+		
+		JTextField firstValueField = new JTextField(20);
+		firstValueField.setFont(font);
+		JTextField secondValueField = new JTextField(20);
+		secondValueField.setFont(font);
+		JTextField resulTextField = new JTextField(40);
+		resulTextField.setFont(font);
+		
+		JPanel inAndOutJPanel = new JPanel();
+		inAndOutJPanel.setLayout(new GridLayout(3,2));
+		inAndOutJPanel.add(value_1Jlable);
+		inAndOutJPanel.add(firstValueField);
+		inAndOutJPanel.add(value_2Jlable);
+		inAndOutJPanel.add(secondValueField);
+		inAndOutJPanel.add(resultJLabel);
+		inAndOutJPanel.add(resulTextField);
+		
+		JPanel buttonOperator = new JPanel(new GridLayout(2,4));
+		JButton sumButton = new JButton("+");
+		sumButton.setFont(font);
+		JButton minusButton = new JButton("-");
+		minusButton.setFont(font);
+		JButton mulButton = new JButton("*");
+		mulButton.setFont(font);
+		JButton divButton = new JButton("/");
+		divButton.setFont(font);
+		JButton powButton = new JButton("^");
+		powButton.setFont(font);
+		JButton modButton = new JButton("MOD");
+		modButton.setFont(font);
+		
+		buttonOperator.add(sumButton);
+		buttonOperator.add(minusButton);
+		buttonOperator.add(mulButton);
+		buttonOperator.add(divButton);
+		buttonOperator.add(powButton);
+		buttonOperator.add(modButton);
+		
+		this.setLayout(new BorderLayout());
+		this.add(inAndOutJPanel,BorderLayout.NORTH);
+		this.add(buttonOperator,BorderLayout.CENTER);
+		
+		this.setVisible(true);
+	}
+}
