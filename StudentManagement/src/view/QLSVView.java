@@ -56,6 +56,7 @@ public class QLSVView extends JFrame {
 	public JRadioButton namRadioBtn;
 	public JRadioButton nuRadioBtn;
 	public JMenuItem menuFileOpen;
+	public JComboBox queQuanComboBox;
 	
 	Font font = new Font("JetBrains Mono", Font.BOLD, 16);
 	Font font_12 = new Font("JetBrains Mono", Font.BOLD, 12);
@@ -113,34 +114,38 @@ public class QLSVView extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel queQuanJLable = new JLabel("Qu\u00EA qu\u00E1n");
-		queQuanJLable.setFont(font);
+		queQuanJLable.setFont(font_12);
 		queQuanJLable.setBounds(36, 10, 89, 22);
 		contentPane.add(queQuanJLable);
 		
-		JComboBox queQuanComboBox = new JComboBox();
+		queQuanComboBox = new JComboBox();
 		ArrayList<Province> listTinh = Province.getDSTinh();
 		for(Province tinh : listTinh) {
 			queQuanComboBox.addItem(tinh.getTenTinhString());
 		}
 		queQuanComboBox.setSelectedIndex(-1);
-		queQuanComboBox.setFont(font);
+		queQuanComboBox.setFont(font_12);
 		queQuanComboBox.setBounds(135, 10, 121, 22);
 		contentPane.add(queQuanComboBox);
 		
 		JLabel maSoSVJLable = new JLabel("M\u00E3 s\u1ED1 sinh vi\u00EAn");
-		maSoSVJLable.setFont(font);
+		maSoSVJLable.setFont(font_12);
 		maSoSVJLable.setBounds(288, 10, 159, 22);
 		contentPane.add(maSoSVJLable);
 		
 		maSoSVTextFeild = new JTextField();
+		maSoSVTextFeild.setText("0");
+		maSoSVTextFeild.setFont(font_12);
 		maSoSVTextFeild.setBounds(457, 13, 172, 20);
 		contentPane.add(maSoSVTextFeild);
 		maSoSVTextFeild.setColumns(10);
 		
 		JButton searchBtn = new JButton("Search");
-		searchBtn.setFont(font);
+		searchBtn.setFont(font_12);
 		searchBtn.setBounds(639, 10, 89, 23);
 		contentPane.add(searchBtn);
+		
+		searchBtn.addActionListener(acQLSVController);
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(10, 41, 746, 2);
@@ -222,6 +227,7 @@ public class QLSVView extends JFrame {
 		contentPane.add(diemToanLable);
 		
 		diemToanTextFeild = new JTextField();
+		diemToanTextFeild.setText("0");
 		diemToanTextFeild.setFont(font_12);
 		diemToanTextFeild.setBounds(496, 278, 232, 20);
 		contentPane.add(diemToanTextFeild);
@@ -233,6 +239,7 @@ public class QLSVView extends JFrame {
 		contentPane.add(diemHoaLable);
 		
 		diemHoaTextFeild = new JTextField();
+		diemHoaTextFeild.setText("0");
 		diemHoaTextFeild.setFont(font_12);
 		diemHoaTextFeild.setBounds(496, 303, 232, 20);
 		contentPane.add(diemHoaTextFeild);
@@ -244,6 +251,7 @@ public class QLSVView extends JFrame {
 		contentPane.add(diemLyLable);
 		
 		diemLyTextFeild = new JTextField();
+		diemLyTextFeild.setText("0");
 		diemLyTextFeild.setFont(font_12);
 		diemLyTextFeild.setBounds(496, 327, 232, 20);
 		contentPane.add(diemLyTextFeild);
@@ -308,7 +316,7 @@ public class QLSVView extends JFrame {
 		editBtn.setFont(font_12);
 		panel.add(editBtn);
 		
-		JButton okBtn = new JButton("Ok");
+		JButton okBtn = new JButton("Lưu");
 		okBtn.addActionListener(acQLSVController);
 		okBtn.setFont(font_12);
 		panel.add(okBtn);
@@ -321,6 +329,8 @@ public class QLSVView extends JFrame {
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(10, 405, 746, 2);
 		contentPane.add(separator_3);
+		
+		
 		
 		this.setVisible(true);
 	}

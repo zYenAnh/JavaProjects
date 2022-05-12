@@ -1,9 +1,11 @@
 package controller;
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import model.Province;
@@ -26,26 +28,39 @@ public class QLSVController implements ActionListener{
 			try {
 				this.addStudent(this.getDataInputBox());
 				this.clearFormInput();
-//				for(Student st: this.view.model.getDsSinhVien()) {
-//					System.out.println("MSSV: "+st.getMaSinhVienInt());
-//				}
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		} else if(srcString.equals("Xoá")) {
-			try {
+			if(this.view.sinhVienTable.getSelectedRow()!=-1) {
 				this.removeStudent();
-				for(Student st: this.view.model.getDsSinhVien()) {
-					System.out.println("MSSV: "+st.getMaSinhVienInt());
-				}
-				
-			} catch (Exception e2) {
-				e2.printStackTrace();
+				this.view.sinhVienTable.clearSelection();				
+			} else {
+				JOptionPane.showMessageDialog(view, "Vui lòng chọn sinh viên cần xoá!");
 			}
+				
 		} else if(srcString.equals("Sửa")) {
-			this.updateStudent();
+			if(this.view.sinhVienTable.getSelectedRow()!=-1) {
+				loadDataTableToInput();
+				this.view.idTextField.disable();				
+			}
+			else {
+				JOptionPane.showMessageDialog(view, "Vui lòng chọn sinh viên cần sửa!");
+			}
 		} else if(srcString.equals("Open")) {
 			this.loadData();
+		} else if(srcString.equals("Lưu")) {
+			if(this.view.sinhVienTable.getSelectedRow()!=-1) {
+				this.updateStudent();		
+				this.view.idTextField.enable();
+				//Test
+				for(int i=0;i<this.view.model.getDsSinhVien().size();i++) {
+					System.out.println(this.view.model.getDsSinhVien().get(i).getTenSinhVienString());
+				}
+			}
+		} else if(srcString.equals("Search")) {
+			System.out.println("click me");
+			this.search();
 		}
 	}
 	
@@ -64,17 +79,22 @@ public class QLSVController implements ActionListener{
 	
 	
 	public Student getDataInputBox() {
-		int id = Integer.valueOf(this.view.idTextField.getText());
-		String tenSV = this.view.nameTextFeild.getText();
-		int idQueQuanSelected = this.view.queQuanOfInfoComboBox.getSelectedIndex();
-		Province queQuan = Province.getTinhById(idQueQuanSelected);
-		Date ngaySinh = new Date(this.view.dateOfBirthTextField.getText());
-		boolean gioiTinh = this.view.namRadioBtn.isSelected();
-		float diemToan = Float.valueOf(this.view.diemToanTextFeild.getText());
-		float diemHoa = Float.valueOf(this.view.diemHoaTextFeild.getText());
-		float diemLy = Float.valueOf(this.view.diemLyTextFeild.getText());
-		
-		return new Student(id,tenSV,queQuan,ngaySinh,gioiTinh,diemToan,diemLy,diemHoa);
+		if(this.view.idTextField.getText() == "" || this.view.nameTextFeild.getText()== "" || this.view.queQuanOfInfoComboBox.getSelectedIndex()==-1 
+				|| this.view.dateOfBirthTextField.getText()=="") {
+			System.out.println("loi nhap");
+		} else {
+			int id = Integer.valueOf(this.view.idTextField.getText());
+			String tenSV = this.view.nameTextFeild.getText();
+			int idQueQuanSelected = this.view.queQuanOfInfoComboBox.getSelectedIndex();
+			Province queQuan = Province.getTinhById(idQueQuanSelected);
+			Date ngaySinh = new Date(this.view.dateOfBirthTextField.getText());
+			boolean gioiTinh = this.view.namRadioBtn.isSelected();
+			float diemToan = Float.valueOf(this.view.diemToanTextFeild.getText());
+			float diemHoa = Float.valueOf(this.view.diemHoaTextFeild.getText());
+			float diemLy = Float.valueOf(this.view.diemLyTextFeild.getText());
+			return new Student(id,tenSV,queQuan,ngaySinh,gioiTinh,diemToan,diemLy,diemHoa);
+		}
+		return null;
 	}
 	
 	public Student getValueSelectedTable(int row_index) {
@@ -93,23 +113,13 @@ public class QLSVController implements ActionListener{
 	}
 	
 	public void addStudent(Student st) {
-		if(!this.view.model.kiemTraStudentTonTai(st)) {
-			this.view.model.insert(st);
-//			DefaultTableModel modelTable = (DefaultTableModel) this.view.sinhVienTable.getModel();
-//			modelTable.addRow(new Object[] {
-//					modelTable.getRowCount()+1,
-//					st.getMaSinhVienInt() + "",
-//					st.getTenSinhVienString(),
-//					st.getQueQuanProvince().getTenTinhString(),
-//					st.getNgaySinhDate().getDate()+"/"+(st.getNgaySinhDate().getMonth()+1)+"/"+ (st.getNgaySinhDate().getYear()+1900) ,
-//					(st.isGioiTinh())?"Nam":"Nữ",
-//					st.getDiemToan()+"",
-//					st.getDiemHoa() + "",
-//					st.getDiemLy() +""
-//			});	
-			loadData();
-		} else {
-			this.view.sinhVienTable.clearSelection();
+		if(st!=null) {
+			if(!this.view.model.kiemTraStudentTonTai(st)) {
+				this.view.model.insert(st);
+				loadData();
+			} else {
+				this.view.sinhVienTable.clearSelection();
+			}
 		}
 	}
 	
@@ -117,7 +127,10 @@ public class QLSVController implements ActionListener{
 		DefaultTableModel modelTable = (DefaultTableModel) this.view.sinhVienTable.getModel();
 		int row_index = this.view.sinhVienTable.getSelectedRow();
 		Student studentSelected = getValueSelectedTable(row_index);
-		this.view.model.remove(studentSelected);
+		int choose = JOptionPane.showConfirmDialog(this.view, "Bạn có chắc chắn xoá sinh viên " + studentSelected.getMaSinhVienInt() + " không?");
+		if(choose == JOptionPane.YES_OPTION) {
+			this.view.model.remove(studentSelected);			
+		}
 		loadData();
 	}
 	
@@ -156,6 +169,68 @@ public class QLSVController implements ActionListener{
 					st.getDiemHoa() + "",
 					st.getDiemLy() +""
 			});
+		}
+	}
+	
+	public void loadDataTableToInput() {
+		DefaultTableModel modelTable = (DefaultTableModel) this.view.sinhVienTable.getModel();
+		int row_index;
+		try {
+			row_index = this.view.sinhVienTable.getSelectedRow();
+			String id = modelTable.getValueAt(row_index, 1)+"";
+			String tenSinhVien = modelTable.getValueAt(row_index, 2)+"";
+			Province queQuan = Province.getTinhByName(modelTable.getValueAt(row_index, 3)+"");
+			String ngaySinh = modelTable.getValueAt(row_index, 4)+"";
+			String gioiTinhString = modelTable.getValueAt(row_index, 5)+"";
+			boolean gioiTinh = gioiTinhString.equals("Nam");
+			String diemToan = modelTable.getValueAt(row_index,6)+"";
+			String diemHoa = modelTable.getValueAt(row_index,7)+"";
+			String diemLy = modelTable.getValueAt(row_index,8)+"";
+			String total = (Float.parseFloat(diemToan)+Float.parseFloat(diemLy)+Float.parseFloat(diemHoa))+"";
+			
+			System.out.println(id + " " + tenSinhVien + " " + queQuan.getTenTinhString() + " " + ngaySinh + " " + gioiTinh + " " + diemToan);
+			
+			this.view.idTextField.setText(id);
+			this.view.nameTextFeild.setText(tenSinhVien);
+			this.view.diemToanTextFeild.setText(diemToan);
+			this.view.diemLyTextFeild.setText(diemLy);
+			this.view.diemHoaTextFeild.setText(diemHoa);
+			this.view.dateOfBirthTextField.setText(ngaySinh);
+			if(gioiTinh)
+				this.view.namRadioBtn.setSelected(true);
+			else
+				this.view.nuRadioBtn.setSelected(true);
+			this.view.totalTextField.setText(total);
+			this.view.queQuanOfInfoComboBox.setSelectedItem(queQuan.getTenTinhString());;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void search() {
+		String queQuan = this.view.queQuanComboBox.getSelectedItem() +"";
+		int mssv = Integer.valueOf(this.view.maSoSVTextFeild.getText());
+		
+		// Xoá trắng table
+		DefaultTableModel tableModel = (DefaultTableModel) this.view.sinhVienTable.getModel();
+		tableModel.getDataVector().removeAllElements();
+		
+		// Ghi lại table khi tìm thấy
+		for(Student st: this.view.model.getDsSinhVien()) {
+			if(st.getMaSinhVienInt()==mssv || queQuan.equals((st.getQueQuanProvince().getTenTinhString())+"")) {
+				System.out.println("vao day");
+				tableModel.addRow(new Object[] {
+						tableModel.getRowCount()+1,
+						st.getMaSinhVienInt() + "",
+						st.getTenSinhVienString(),
+						st.getQueQuanProvince().getTenTinhString(),
+						st.getNgaySinhDate().getDate()+"/"+(st.getNgaySinhDate().getMonth())+"/"+ (st.getNgaySinhDate().getYear()),
+						st.isGioiTinh()?"Nam":"Nữ",
+						st.getDiemToan()+"",
+						st.getDiemHoa() + "",
+						st.getDiemLy() +""
+				});
+			}
 		}
 	}
 	
