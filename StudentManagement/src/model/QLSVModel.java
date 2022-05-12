@@ -38,7 +38,12 @@ public class QLSVModel {
 	}
 	
 	public void remove(Student student) {
-		this.dsSinhVien.remove(student);
+		int i;
+		for(i=0;i<this.dsSinhVien.size();i++) {
+			if(this.dsSinhVien.get(i).getMaSinhVienInt()==student.getMaSinhVienInt())
+				break;
+		}
+		this.dsSinhVien.remove(i);
 	}
 	
 	public void update(Student student) {
