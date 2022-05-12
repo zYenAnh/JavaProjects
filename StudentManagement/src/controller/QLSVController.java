@@ -23,7 +23,6 @@ public class QLSVController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String srcString = e.getActionCommand();
-		System.out.println("Click: " +srcString);
 		if(srcString.equals("Thêm")) {
 			try {
 				this.addStudent(this.getDataInputBox());
@@ -53,15 +52,16 @@ public class QLSVController implements ActionListener{
 			if(this.view.sinhVienTable.getSelectedRow()!=-1) {
 				this.updateStudent();		
 				this.view.idTextField.enable();
-				//Test
-				for(int i=0;i<this.view.model.getDsSinhVien().size();i++) {
-					System.out.println(this.view.model.getDsSinhVien().get(i).getTenSinhVienString());
-				}
 			}
 		} else if(srcString.equals("Search")) {
-			System.out.println("click me");
+			
 			this.search();
+		} else if(srcString.equals("Cancel")) {
+			this.clearFormInput();
+			this.view.idTextField.enable();
+			this.loadData();
 		}
+	
 	}
 	
 	// Xoá trắng các ô input
@@ -81,7 +81,7 @@ public class QLSVController implements ActionListener{
 	public Student getDataInputBox() {
 		if(this.view.idTextField.getText() == "" || this.view.nameTextFeild.getText()== "" || this.view.queQuanOfInfoComboBox.getSelectedIndex()==-1 
 				|| this.view.dateOfBirthTextField.getText()=="") {
-			System.out.println("loi nhap");
+			JOptionPane.showMessageDialog(view, "Dữ liệu nhập vào không đúng. vui lòng nhập lại!");
 		} else {
 			int id = Integer.valueOf(this.view.idTextField.getText());
 			String tenSV = this.view.nameTextFeild.getText();
@@ -188,7 +188,6 @@ public class QLSVController implements ActionListener{
 			String diemLy = modelTable.getValueAt(row_index,8)+"";
 			String total = (Float.parseFloat(diemToan)+Float.parseFloat(diemLy)+Float.parseFloat(diemHoa))+"";
 			
-			System.out.println(id + " " + tenSinhVien + " " + queQuan.getTenTinhString() + " " + ngaySinh + " " + gioiTinh + " " + diemToan);
 			
 			this.view.idTextField.setText(id);
 			this.view.nameTextFeild.setText(tenSinhVien);
@@ -218,7 +217,6 @@ public class QLSVController implements ActionListener{
 		// Ghi lại table khi tìm thấy
 		for(Student st: this.view.model.getDsSinhVien()) {
 			if(st.getMaSinhVienInt()==mssv || queQuan.equals((st.getQueQuanProvince().getTenTinhString())+"")) {
-				System.out.println("vao day");
 				tableModel.addRow(new Object[] {
 						tableModel.getRowCount()+1,
 						st.getMaSinhVienInt() + "",
