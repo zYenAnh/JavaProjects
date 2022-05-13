@@ -84,6 +84,7 @@ public class QLSVView extends JFrame {
 		menuFileOpen = new JMenuItem("Open");
 		menuFileOpen.setFont(font_12);
 		menuFileOpen.addActionListener(acQLSVController);
+//		menuFileOpen.setIcon(null);
 		menuFile.add(menuFileOpen);
 		
 		JMenuItem menuFileClose = new JMenuItem("Close");
@@ -329,8 +330,6 @@ public class QLSVView extends JFrame {
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setBounds(10, 405, 746, 2);
 		contentPane.add(separator_3);
-		
-		
 		
 		this.setVisible(true);
 	}

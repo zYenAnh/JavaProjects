@@ -50,7 +50,8 @@ public class QLSVController implements ActionListener{
 			this.loadData();
 		} else if(srcString.equals("Lưu")) {
 			if(this.view.sinhVienTable.getSelectedRow()!=-1) {
-				this.updateStudent();		
+				this.updateStudent();
+				this.clearFormInput();
 				this.view.idTextField.enable();
 			}
 		} else if(srcString.equals("Search")) {
